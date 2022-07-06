@@ -1,4 +1,4 @@
-# Project Name
+# Azure Cosmos DB Table API client library v12 samples for .NET
 
 (short, 1-3 sentenced, description of the project)
 
