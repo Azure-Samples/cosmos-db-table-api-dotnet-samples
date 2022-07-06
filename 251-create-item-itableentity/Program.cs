@@ -32,7 +32,7 @@ Product item = new()
 };
 // </create_object> 
 
-// <create_row>
+// <create_item>
 // Add new item to server-side table
 await tableClient.AddEntityAsync<Product>(item);
-// </create_row>
+// </create_item>

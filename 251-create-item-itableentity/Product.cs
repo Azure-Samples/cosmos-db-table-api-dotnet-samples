@@ -8,7 +8,7 @@ using Azure.Data.Tables;
 // </using_directives>
 
 // <type>
-// C# record type for rows in the table
+// C# record type for items in the table
 public record Product : ITableEntity
 {
     public string RowKey { get; set; } = default!;
