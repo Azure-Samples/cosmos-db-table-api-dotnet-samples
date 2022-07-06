@@ -32,14 +32,14 @@ Dictionary<string, object> properties = new()
 };
 
 // Create new item using dictionary constructor
-TableEntity item = new(
+TableEntity newItem = new(
     values: properties
 );
 // </create_object>
 
 // <create_item>
 // Add new item to server-side table
-await tableClient.AddEntityAsync<TableEntity>(item);
+await tableClient.AddEntityAsync<TableEntity>(newItem);
 // </create_item>
 
 // <read_item>
