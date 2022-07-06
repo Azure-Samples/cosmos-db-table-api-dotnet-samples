@@ -12,7 +12,9 @@ jobs:
           - ./102-client-default-credential
           - ./103-client-secret-credential
           - ./200-create-table
-          - ./250-create-row
+          - ./201-create-table-options
+          - ./250-create-row-tableentity
+          - ./251-create-row-itableentity
     defaults:
       run:
         working-directory: ${{ matrix.project-directory }}
