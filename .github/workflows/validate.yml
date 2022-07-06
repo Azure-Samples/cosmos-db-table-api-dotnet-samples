@@ -10,7 +10,7 @@ jobs:
         project-directory:
           - ./101-client-connection-string
           - ./102-client-default-credential
-          - ./104-client-secret-credential
+          - ./103-client-secret-credential
           - ./200-create-table
           - ./250-create-row
     defaults:

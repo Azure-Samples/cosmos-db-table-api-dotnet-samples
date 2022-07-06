@@ -11,14 +11,19 @@ using Azure.Data.Tables;
 // </using_directives>
 
 // <credential>
-// Credential class for testing on a local machine or Azure services
-TokenCredential credential = new DefaultAzureCredential();
+// Custom credential class for servers and clients outside of Azure
+TokenCredential credential = new ClientSecretCredential(
+    tenantId: Environment.GetEnvironmentVariable("AAD_TENANT_ID")!,
+    clientId: Environment.GetEnvironmentVariable("AAD_CLIENT_ID")!,
+    clientSecret: Environment.GetEnvironmentVariable("AAD_CLIENT_SECRET")!,
+    options: new TokenCredentialOptions()
+);
 // </credential>
 
-// <default_credential> 
+// <secret_credential> 
 // New instance of TableServiceClient class using a credential
 TableServiceClient client = new(
     endpoint: new Uri(Environment.GetEnvironmentVariable("COSMOS_ENDPOINT")!),
     tokenCredential: credential
 );
-// </default_credential>
+// </secret_credential> 
