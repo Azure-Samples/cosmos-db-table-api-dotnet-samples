@@ -36,7 +36,7 @@ item1.Add("Sale", true);
 await tableClient.AddEntityAsync<TableEntity>(item1);
 // </create_object_add>
 
-// <create_object> 
+// <create_object_dictionary> 
 // Create dictionary
 Dictionary<string, object> properties = new()
 {
