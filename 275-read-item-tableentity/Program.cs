@@ -20,22 +20,6 @@ TableClient tableClient = client.GetTableClient(
 );
 // </get_table>
 
-// <create_object_add> 
-// Create new item using composite key constructor
-TableEntity item1 = new(
-    rowKey: "68719518388",
-    partitionKey: "gear-surf-surfboards"
-);
-
-// Add properties to item
-item1.Add("Name", "Sunnox Surfboard");
-item1.Add("Quantity", 8);
-item1.Add("Sale", true);
-
-// Add new item to server-side table
-await tableClient.AddEntityAsync<TableEntity>(item1);
-// </create_object_add>
-
 // <create_object> 
 // Create dictionary
 Dictionary<string, object> properties = new()
@@ -48,10 +32,20 @@ Dictionary<string, object> properties = new()
 };
 
 // Create new item using dictionary constructor
-TableEntity item2 = new(
+TableEntity item = new(
     values: properties
 );
+// </create_object>
 
+// <create_item>
 // Add new item to server-side table
-await tableClient.AddEntityAsync<TableEntity>(item2);
-// </create_object_dictionary>
+await tableClient.AddEntityAsync<TableEntity>(item);
+// </create_item>
+
+// <read_item>
+// Read existing item from server-side table
+TableEntity readItem = await tableClient.GetEntityAsync<TableEntity>(
+    partitionKey: "68719518388",
+    rowKey: "gear-surf-surfboards"
+);
+// </read_item>
