@@ -8,11 +8,7 @@ jobs:
     strategy:
       matrix:
         project-directory:
-          - ./102-client-connection-string
-          - ./103-client-default-credential
-          - ./104-client-secret-credential
-          - ./200-create-table
-          - ./250-create-row
+          - ./101-client-connection-string
     defaults:
       run:
         working-directory: ${{ matrix.project-directory }}
