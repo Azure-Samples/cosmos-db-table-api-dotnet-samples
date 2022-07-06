@@ -22,7 +22,7 @@ TableClient tableClient = client.GetTableClient(
 
 // <create_object> 
 // Create new item
-Product item = new()
+Product newItem = new()
 {
     RowKey = "68719518388",
     PartitionKey = "gear-surf-surfboards",
@@ -34,7 +34,7 @@ Product item = new()
 
 // <create_item>
 // Add new item to server-side table
-await tableClient.AddEntityAsync<Product>(item);
+await tableClient.AddEntityAsync<Product>(newItem);
 // </create_item>
 
 // <read_item>
