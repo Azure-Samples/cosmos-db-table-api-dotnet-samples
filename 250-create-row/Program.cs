@@ -22,8 +22,8 @@ TableClient tableClient = client.GetTableClient(
 
 // <create_object> 
 // Create new row and add to table
-Product row = new ()
-{   
+Product row = new()
+{
     RowKey = "68719518388",
     PartitionKey = "gear-surf-surfboards",
     Name = "Sunnox Surfboard",
