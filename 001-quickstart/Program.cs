@@ -9,12 +9,12 @@ using Azure.Data.Tables;
 
 // <client_credentials> 
 // New instance of the TableClient class
-var _tableClient = new TableClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"));
+var _tableServiceClient = new TableServiceClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"));
 // </client_credentials>
 
 // <create_table>
 // New instance of TableClient class referencing the server-side table
-TableClient tableClient = client.GetTableClient(
+TableClient tableClient = _tableServiceClient.GetTableClient(
     tableName: "adventureworks"
 );
 
