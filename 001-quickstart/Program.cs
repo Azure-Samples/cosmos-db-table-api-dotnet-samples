@@ -3,18 +3,20 @@
 // ------------------------------------------------------------
 
 // <using_directives> 
+using app;
+using Azure;
 using Azure.Data.Tables;
 // </using_directives>
 
 // <client_credentials> 
 // New instance of the TableClient class
-TableServiceClient client = new TableServiceClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"));
+var tableServiceClient = new TableServiceClient("DefaultEndpointsProtocol=https;AccountName=alexwadventureworks;AccountKey=xtTlrytMgtHZjl2GJVyWBq5wTDc4pYwfpijM8sjwxPsdbfUyqU1eQ9c3hH65YUympcBumBxQz1MzbY34N5no4Q==;TableEndpoint=https://alexwadventureworks.table.cosmos.azure.com:443/;");
 // </client_credentials>
 
 // <create_table>
 // New instance of TableClient class referencing the server-side table
-TableClient tableClient = client.GetTableClient(
-    tableName: "adventureworks2"
+TableClient tableClient = tableServiceClient.GetTableClient(
+    tableName: "adventureworks"
 );
 
 await tableClient.CreateIfNotExistsAsync();
@@ -22,50 +24,47 @@ await tableClient.CreateIfNotExistsAsync();
 
 // <create_object_add> 
 // Create new item using composite key constructor
-TableEntity item1 = new(
-    rowKey: "68719518388",
-    partitionKey: "gear-surf-surfboards"
-);
-
-// Add properties to item
-item1.Add("Name", "Yamba Surfboard");
-item1.Add("Quantity", 5);
-item1.Add("Sale", false);
+var prod1 = new Product()
+{
+    RowKey = "68719518388",
+    PartitionKey = "gear-surf-surfboards",
+    Name = "Ocean Surfboard",
+    Quantity = 8,
+    Sale = true
+};
 
 // Add new item to server-side table
-await tableClient.AddEntityAsync<TableEntity>(item1);
+await tableClient.AddEntityAsync<Product>(prod1);
 // </create_object_add>
 
 // <read_item> 
 // Read a single item from container
-var product = await tableClient.GetEntityAsync<TableEntity>(
+var product = await tableClient.GetEntityAsync<Product>(
     rowKey: "68719518388",
     partitionKey: "gear-surf-surfboards"
 );
 Console.WriteLine("Single product:");
-Console.WriteLine(product.Value["Name"]);
+Console.WriteLine(product.Value.Name);
 // </read_item>
 
 // <query_items> 
 // Read multiple items from container
-TableEntity item2 = new(
-    rowKey: "68719518399",
-    partitionKey: "gear-surf-surfboards"
-);
+var prod2 = new Product()
+{
+    RowKey = "68719518390",
+    PartitionKey = "gear-surf-surfboards",
+    Name = "Sand Surfboard",
+    Quantity = 5,
+    Sale = false
+};
 
-// Add properties to item
-item2.Add("Name", "Sand Surfboard");
-item2.Add("Quantity", 8);
-item2.Add("Sale", true);
+await tableClient.AddEntityAsync<Product>(prod2);
 
-
-tableClient.AddEntity<TableEntity>(item2);
-
-var products = tableClient.Query<TableEntity>(filter: $"PartitionKey eq 'gear-surf-surfboards'");
+var products = tableClient.Query<Product>(x => x.PartitionKey == "gear-surf-surfboards");
 
 Console.WriteLine("Multiple products:");
 foreach (var item in products)
 {
-    Console.WriteLine(item["Name"]);
+    Console.WriteLine(item.Name);
 }
 // </query_items>
