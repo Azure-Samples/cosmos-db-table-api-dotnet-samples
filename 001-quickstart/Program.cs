@@ -10,7 +10,7 @@ using Azure.Data.Tables;
 
 // <client_credentials> 
 // New instance of the TableClient class
-var tableServiceClient = new TableServiceClient("DefaultEndpointsProtocol=https;AccountName=alexwadventureworks;AccountKey=xtTlrytMgtHZjl2GJVyWBq5wTDc4pYwfpijM8sjwxPsdbfUyqU1eQ9c3hH65YUympcBumBxQz1MzbY34N5no4Q==;TableEndpoint=https://alexwadventureworks.table.cosmos.azure.com:443/;");
+var tableServiceClient = new TableServiceClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"));
 // </client_credentials>
 
 // <create_table>
