@@ -3,14 +3,12 @@
 // ------------------------------------------------------------
 
 // <using_directives> 
-using app;
-using Azure;
 using Azure.Data.Tables;
 // </using_directives>
 
 // <client_credentials> 
 // New instance of the TableClient class
-var tableServiceClient = new TableServiceClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"));
+TableServiceClient tableServiceClient = new TableServiceClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"));
 // </client_credentials>
 
 // <create_table>
