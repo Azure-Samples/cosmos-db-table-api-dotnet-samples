@@ -3,19 +3,18 @@
 // ------------------------------------------------------------
 
 // <using_directives> 
-using Azure;
 using Azure.Data.Tables;
 // </using_directives>
 
 // <client_credentials> 
 // New instance of the TableClient class
-var _tableServiceClient = new TableServiceClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"));
+TableServiceClient client = new TableServiceClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"));
 // </client_credentials>
 
 // <create_table>
 // New instance of TableClient class referencing the server-side table
-TableClient tableClient = _tableServiceClient.GetTableClient(
-    tableName: "adventureworks"
+TableClient tableClient = client.GetTableClient(
+    tableName: "adventureworks2"
 );
 
 await tableClient.CreateIfNotExistsAsync();
@@ -44,28 +43,29 @@ var product = await tableClient.GetEntityAsync<TableEntity>(
     partitionKey: "gear-surf-surfboards"
 );
 Console.WriteLine("Single product:");
-Console.WriteLine(product.Name);
+Console.WriteLine(product.Value["Name"]);
 // </read_item>
 
 // <query_items> 
 // Read multiple items from container
-var prod = new Product()
-{
-    PartitionKey = "Products",
-    RowKey = Guid.NewGuid().ToString(),
-    Category = "gear-surf-surfboards",
-    Name = "Sand Surfboard",
-    Quantity = 8,
-    Sale = true
-};
+TableEntity item2 = new(
+    rowKey: "68719518399",
+    partitionKey: "gear-surf-surfboards"
+);
 
-_tableClient.AddEntity<Product>(prod);
+// Add properties to item
+item2.Add("Name", "Sand Surfboard");
+item2.Add("Quantity", 8);
+item2.Add("Sale", true);
 
-var products = _tableClient.Query<Product>(x => x.Category == "gear-surf-surfboards");
+
+tableClient.AddEntity<TableEntity>(item2);
+
+var products = tableClient.Query<TableEntity>(filter: $"PartitionKey eq 'gear-surf-surfboards'");
 
 Console.WriteLine("Multiple products:");
 foreach (var item in products)
 {
-    Console.WriteLine(item.Name);
+    Console.WriteLine(item["Name"]);
 }
 // </query_items>
